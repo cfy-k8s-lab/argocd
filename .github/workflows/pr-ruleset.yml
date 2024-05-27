@@ -15,7 +15,7 @@ jobs:
     - name: Validate PR Title
       id: validate_title
       run: |
-        if [[ "${{ github.event.pull_request.title }}" =~ ^[A-Z]{2,}-[0-9]+: ]]; then
+        if [[ "${{ github.event.pull_request.title }}" =~ ^:robot:\ \[backstage-bot\]\ Onboarding\ new\ project ]]; then
           echo "PR title is valid"
           echo "title-valid=true" >> $GITHUB_OUTPUT
         else

@@ -1,8 +1,26 @@
 name: PR Ruleset and Auto-Merge
 
 on:
-  pull_request:
-    types: [opened, edited, synchronize]
+  pull_request_review:
+    types:
+      - submitted
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+      - labeled
+      - unlabeled
+      - ready_for_review
+  workflow_dispatch:
+    inputs:
+      pull-request:
+        description: Pull Request Number
+        required: false
+      review:
+        description: Review ID
+        required: false
 
 jobs:
   check-pr:
@@ -45,16 +63,12 @@ jobs:
 
     - name: Auto Merge PR
       if: steps.check_conditions.outputs.all-valid == 'true'
-      uses: actions/github-script@v7
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const { owner, repo } = context.repo;
-          const pull_number = context.payload.pull_request.number;
-
-          await github.pulls.merge({
-            owner,
-            repo,
-            pull_number,
-            merge_method: 'squash'
-          });
+      uses: reitermarkus/automerge@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          merge-method: squash
+          do-not-merge-labels: never-merge
+          required-labels: automerge
+          pull-request: ${{ github.event.inputs.pull-request }}
+          review: ${{ github.event.inputs.review }}
+          dry-run: false

@@ -44,7 +44,7 @@ jobs:
         fi
 
     - name: Auto Merge PR
-      if: steps.check_conditions.outputs.all-valid == "true"
+      if: steps.check_conditions.outputs.all-valid == 'true'
       uses: davideviolante/pr-automerge-action@v1.4.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

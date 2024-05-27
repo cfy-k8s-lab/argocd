@@ -47,6 +47,7 @@ jobs:
       if: steps.check_conditions.outputs.all-valid == 'true'
       uses: actions/github-script@v7
       with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const { owner, repo } = context.repo;
           const pull_number = context.payload.pull_request.number;
@@ -57,5 +58,3 @@ jobs:
             pull_number,
             merge_method: 'squash'
           });
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

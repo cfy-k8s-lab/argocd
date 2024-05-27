@@ -1,4 +1,3 @@
 # argocd
 
 GitOps repository
-sdf

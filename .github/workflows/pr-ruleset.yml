@@ -45,17 +45,10 @@ jobs:
 
     - name: Auto Merge PR
       if: steps.check_conditions.outputs.all-valid == 'true'
-      uses: actions/github-script@v4
+      uses: davideviolante/pr-automerge-action@v1.4.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        script: |
-          const { owner, repo } = context.repo;
-          const pull_number = context.payload.pull_request.number;
-
-          await github.pulls.merge({
-            owner,
-            repo,
-            pull_number,
-            merge_method: 'squash'
-          });
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        merge-method: 'squash' # Default 'squash'
+        min-approvals: 2 # Default 2
+        base-ref: 'dev' # Default 'dev'

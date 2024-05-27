@@ -23,7 +23,7 @@ on:
         required: false
 
 jobs:
-  check-pr:
+  check-pull-request:
     runs-on: ubuntu-latest
 
     steps:

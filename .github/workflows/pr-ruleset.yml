@@ -10,17 +10,17 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Validate PR Title
       id: validate_title
       run: |
         if [[ "${{ github.event.pull_request.title }}" =~ ^[A-Z]{2,}-[0-9]+: ]]; then
           echo "PR title is valid"
-          echo "::set-output name=title-valid::true"
+          echo "title-valid=true" >> $GITHUB_OUTPUT
         else
           echo "PR title is invalid"
-          echo "::set-output name=title-valid::false"
+          echo "title-valid=false" >> $GITHUB_OUTPUT
         fi
 
     - name: Validate PR Description
@@ -28,23 +28,23 @@ jobs:
       run: |
         if [[ -n "${{ github.event.pull_request.body }}" ]]; then
           echo "PR description is valid"
-          echo "::set-output name=description-valid::true"
+          echo "description-valid=true" >> $GITHUB_OUTPUT
         else
           echo "PR description is invalid"
-          echo "::set-output name=description-valid::false"
+          echo "description-valid=false" >> $GITHUB_OUTPUT
         fi
 
     - name: Check All Conditions
       id: check_conditions
       run: |
         if [[ "${{ steps.validate_title.outputs.title-valid }}" == "true" && "${{ steps.validate_description.outputs.description-valid }}" == "true" ]]; then
-          echo "::set-output name=all-valid::true"
+          echo "all-valid=true" >> $GITHUB_OUTPUT
         else
-          echo "::set-output name=all-valid::false"
+          echo "all-valid=false" >> $GITHUB_OUTPUT
         fi
 
     - name: Auto Merge PR
-      if: steps.check_conditions.outputs.all-valid == 'true'
+      if: steps.check_conditions.outputs.all-valid == "true"
       uses: davideviolante/pr-automerge-action@v1.4.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

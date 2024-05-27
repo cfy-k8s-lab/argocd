@@ -64,11 +64,11 @@ jobs:
     - name: Auto Merge PR
       if: steps.check_conditions.outputs.all-valid == 'true'
       uses: reitermarkus/automerge@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: squash
-          do-not-merge-labels: never-merge
-          required-labels: automerge
-          pull-request: ${{ github.event.inputs.pull-request }}
-          review: ${{ github.event.inputs.review }}
-          dry-run: false
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        merge-method: squash
+        do-not-merge-labels: never-merge
+        required-labels: automerge
+        pull-request: ${{ github.event.inputs.pull-request }}
+        review: ${{ github.event.inputs.review }}
+        dry-run: false

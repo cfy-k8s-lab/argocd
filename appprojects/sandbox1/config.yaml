@@ -1,2 +1,16 @@
+apiVersion: ppfbanka.cz/v1alpha1
+kind: Project
+metadata:
+  name: sandbox1
 spec:
-  data: ahoj sandbox 1
+  displayName: SANDBOX One
+  IDMTest: true
+  environments:
+    - name: uat
+    - name: sit
+  resources:
+    hard:
+      requests.cpu: 4
+      requests.memory: 16Gi
+      limits.cpu: 8
+      limits.memory: 32Gi  data: ahoj sandbox 1

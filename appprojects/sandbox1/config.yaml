@@ -5,6 +5,7 @@ metadata:
 spec:
   displayName: SANDBOX One
   IDMTest: true
+  gitRepo: https://github.com/cfy-k8s-lab/sandbox1.git
   environments:
     - name: uat
     - name: sit
